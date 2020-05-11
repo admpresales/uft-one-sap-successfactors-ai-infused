@@ -24,6 +24,7 @@ AIUtil.SetContext Browser("Browser")														'Tell the AI SDK which window 
 AIUtil("input", "Usernam.").Type DataTable.GlobalSheet.GetParameter("Username")				'Enter the User Name from the datasheet into the username field
 AIUtil("text_box", "Enter Password").Type DataTable.GlobalSheet.GetParameter("Password")	'Enter the password fromt he datasheet into the Password field
 AIUtil("button", "in").Click																'Click the Login button
+AIUtil("down_triangle", micNoText, micFromLeft, 1).Highlight								'Highlight the down triangle for the menu
 AIUtil("down_triangle", micNoText, micFromLeft, 1).Click									'Click the down triangle for the menu
 AIUtil.FindTextBlock("Recruiting").Click													'Click the Recruiting menu item
 'AIUtil.FindTextBlock("Recruiting", micFromTop, 1).Click										'Click the Recruiting menu item
@@ -53,10 +54,12 @@ AIUtil.FindTextBlock("Close Window").Click													'Close the pop-up browser
 AIUtil.SetContext Browser("Browser")														'Tell the AI SDK to work against the initial window again
 AIUtil.FindTextBlock("Basic Info V").Click													'Click the Basic Info drop down to be able to search by the name
 AIUtil.FindTextBlock("First Name").Click													'Click the First Name in the drop down
+AIUtil("text_box", "", micFromBottom, 1).Highlight											'There is a need to sometimes slow the script to allow the app to catch up
 AIUtil("text_box", "", micFromBottom, 1).Type FirstName										'Enter the same first name for the candidate created earlier
 AIUtil("button", "", micFromTop, 3).Click													'Click the Search button
 AIUtil("button", "Accept").Click															'Click the Accept button on the pop-up frame to accept search results
 Browser("Browser").Page("SuccessFactors: Candidates").SAPUIButton("Account Navigation for").Click	'There isn't anything for AI to recognize for the user drop down, it's a picture of the person, use traditional OR @@ script infofile_;_ZIP::ssf5.xml_;_
 AIUtil.FindTextBlock("Q) Log out").Click													'Click the Log out text in the drop down menu
+AIUtil("input", "Usernam.").Highlight														'HIghlight the User Name field to make sure that the logout command has finished
 Browser("Browser").Close																	'Close the browser
 
