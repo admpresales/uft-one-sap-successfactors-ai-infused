@@ -17,8 +17,9 @@ fnRandomNumberWithDateTimeStamp = Int(sDate & sMonth & sYear & sHour & sMinute &
 End Function
 '======================== End Function =====================
 
-Dim UserName, FirstName, LastName, Email, FullName, Country
+Dim UserName, FirstName, LastName, Email, Country
 
+Browser("Browser").Maximize																	'Maximize the browser window
 Browser("Browser").Navigate DataTable.GlobalSheet.GetParameter("URL")						'Navigate to the URL of SuccessFactors, driven off of the datasheet
 AIUtil.SetContext Browser("Browser")														'Tell the AI SDK which window to work against
 AIUtil("input", "Usernam.").Type DataTable.GlobalSheet.GetParameter("Username")				'Enter the User Name from the datasheet into the username field
@@ -26,6 +27,7 @@ AIUtil("text_box", "Enter Password").Type DataTable.GlobalSheet.GetParameter("Pa
 AIUtil("button", "in").Click																'Click the Login button
 AIUtil("down_triangle", micNoText, micFromLeft, 1).Highlight								'Highlight the down triangle for the menu
 AIUtil("down_triangle", micNoText, micFromLeft, 1).Click									'Click the down triangle for the menu
+AIUtil.FindTextBlock("Recruiting").Highlight												'Highlight the Recruiting menu item to ensure that it is displayed
 AIUtil.FindTextBlock("Recruiting").Click													'Click the Recruiting menu item
 'AIUtil.FindTextBlock("Recruiting", micFromTop, 1).Click										'Click the Recruiting menu item
 Browser("Browser").Page("SuccessFactors: Job Requisitio").WebTable("Job Requisition Summary").WaitProperty "visible",True, 3000	'Wait for the application to be ready to proceed, keying off of the Job Requisition data table, using traditional OR
@@ -58,6 +60,9 @@ AIUtil("text_box", "", micFromBottom, 1).Highlight											'There is a need to
 AIUtil("text_box", "", micFromBottom, 1).Type FirstName										'Enter the same first name for the candidate created earlier
 AIUtil("button", "", micFromTop, 3).Click													'Click the Search button
 AIUtil("button", "Accept").Click															'Click the Accept button on the pop-up frame to accept search results
+'Insert a data drive checkpoint here
+DataTable.Value ("FullName") = FirstName & " " & LastName									'Set the value in the data table for the calculated full name of the candidate, used in the next step
+Browser("Browser").Page("SuccessFactors: Candidates").Link("CandidateName").Check CheckPoint("CPCandidateFullName")	'Checkpoint to make sure that the candidate link showed up @@ script infofile_;_ZIP::ssf18.xml_;_
 Browser("Browser").Page("SuccessFactors: Candidates").SAPUIButton("Account Navigation for").Click	'There isn't anything for AI to recognize for the user drop down, it's a picture of the person, use traditional OR @@ script infofile_;_ZIP::ssf5.xml_;_
 AIUtil.FindTextBlock("Q) Log out").Click													'Click the Log out text in the drop down menu
 AIUtil("input", "Usernam.").Highlight														'HIghlight the User Name field to make sure that the logout command has finished
