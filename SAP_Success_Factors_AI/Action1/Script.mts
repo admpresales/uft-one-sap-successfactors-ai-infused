@@ -62,11 +62,11 @@ AIUtil("button", "Accept").Click															'Click the Accept button on the p
 'Insert a data drive checkpoint here
 DataTable.Value ("FullName") = FirstName & " " & LastName & " "								'Set the value in the data table for the calculated full name of the candidate, used in the next step
 'Debug code to determine why the checkpoint was failing, turns out that there is a trailing space in the application code that the result HTML was trimming when displaying expected vs. actual
-'CPExpected = "'" & DataTable.Value ("FullName") & "'"
-'CPActual = Browser("Browser").Page("SuccessFactors: Candidates").Link("CandidateName").GetROProperty("text")
-'CPActual = "'" & CPActual & "'"
-'Print "Expected is " & CPExpected
-'Print "Actual is " & CPActual
+'CPExpected = "'" & DataTable.Value ("FullName") & "'"										'Set the variable for what is in the data table, enclose with single quotes so we can find leading/trailing spaces
+'CPActual = Browser("Browser").Page("SuccessFactors: Candidates").Link("CandidateName").GetROProperty("text")	'Get the actual text from the object at run time
+'CPActual = "'" & CPActual & "'"															'Set the variable for what is the object property at run time enclosed with a single quotes so we can find leading/trailing spaces
+'Print "Expected is " & CPExpected															'Output the expected value to the output log
+'Print "Actual is " & CPActual																'Output the actual value to the output log
 Browser("Browser").Page("SuccessFactors: Candidates").Link("CandidateName").Check CheckPoint("CPCandidateFullName")	'Checkpoint to make sure that the candidate link showed up @@ script infofile_;_ZIP::ssf18.xml_;_
 Browser("Browser").Page("SuccessFactors: Candidates").SAPUIButton("Account Navigation for").Click	'There isn't anything for AI to recognize for the user drop down, it's a picture of the person, use traditional OR @@ script infofile_;_ZIP::ssf5.xml_;_
 AIUtil.FindTextBlock("Q) Log out").Click													'Click the Log out text in the drop down menu
