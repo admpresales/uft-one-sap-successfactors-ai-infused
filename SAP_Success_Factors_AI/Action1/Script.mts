@@ -59,7 +59,6 @@ AIUtil("text_box", "", micFromBottom, 1).Highlight											'There is a need to
 AIUtil("text_box", "", micFromBottom, 1).Type FirstName										'Enter the same first name for the candidate created earlier
 AIUtil("button", "", micFromTop, 3).Click													'Click the Search button
 AIUtil("button", "Accept").Click															'Click the Accept button on the pop-up frame to accept search results
-'Insert a data drive checkpoint here
 DataTable.Value ("FullName") = FirstName & " " & LastName & " "								'Set the value in the data table for the calculated full name of the candidate, used in the next step
 'Debug code to determine why the checkpoint was failing, turns out that there is a trailing space in the application code that the result HTML was trimming when displaying expected vs. actual
 'CPExpected = "'" & DataTable.Value ("FullName") & "'"										'Set the variable for what is in the data table, enclose with single quotes so we can find leading/trailing spaces
