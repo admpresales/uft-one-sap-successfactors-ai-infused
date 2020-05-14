@@ -55,8 +55,36 @@ AIUtil.FindTextBlock("Close Window").Click													'Close the pop-up browser
 AIUtil.SetContext Browser("Browser")														'Tell the AI SDK to work against the initial window again
 AIUtil.FindTextBlock("Basic Info V").Click													'Click the Basic Info drop down to be able to search by the name
 AIUtil.FindTextBlock("First Name").Click													'Click the First Name in the drop down
-AIUtil("text_box", "", micFromBottom, 1).Highlight											'There is a need to sometimes slow the script to allow the app to catch up
-AIUtil("text_box", "", micFromBottom, 1).Type FirstName										'Enter the same first name for the candidate created earlier
+
+Browser("Browser").Page("SuccessFactors: Candidates").WebEdit("FirstNameSearchBox").Set FirstName	'Enter the same first name for the candidate created earlier
+
+'====================================================================================================
+'	This is a section to work on building VRI to click in the search box rather than using traditional OR
+
+'AIUtil.SetContext Browser("Browser")														'Tell the AI SDK which window to work against
+'
+''Set AnchorObject = AIUtil.FindText("Profile", micFromTop, 2) 'Describe the anchor object
+'Set AnchorObject = AIUtil.FindText("and First Name")
+'AnchorObject.Highlight
+''AIUtil.FindText("User Name",micWithAnchorOnLeft, AnchorObject).Type "FN145202084557"
+'AIUtil.(("text_box"),micWithAnchorOnLeft, AnchorObject).Type "FN145202084557"
+'AIUtil.FindTextBlock("and First Name").Click
+'
+'
+'AIUtil("combobox", "and First Name").Highlight
+
+
+''The following example clicks on the user name to the right of the 2nd "Profile"
+'' text from the top. Then it clicks on the login text.
+'AIUtil.SetContext Device("device")  'Set the context for AI
+'Set secondProfileFromTop = AIUtil.FindText("Profile", micFromTop, 2) 'Describe the anchor object
+'AIUtil.FindText("User Name",micWithAnchorOnLeft, secondProfileFromTop).Click
+'AIUtil.FindTextBlock("Log In With Your App").Click 10, 10 'Click the 10,10 point in the LogIn text
+
+'AIUtil("text_box", "", micFromBottom, 1).Highlight											'There is a need to sometimes slow the script to allow the app to catch up
+'AIUtil("text_box", "", micFromBottom, 1).Type FirstName										'Enter the same first name for the candidate created earlier
+'====================================================================================================
+
 AIUtil("button", "", micFromTop, 3).Click													'Click the Search button
 AIUtil("button", "Accept").Click															'Click the Accept button on the pop-up frame to accept search results
 DataTable.Value ("FullName") = FirstName & " " & LastName & " "								'Set the value in the data table for the calculated full name of the candidate, used in the next step
