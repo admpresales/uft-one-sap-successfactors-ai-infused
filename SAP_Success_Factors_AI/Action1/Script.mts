@@ -48,6 +48,7 @@ AIUtil.SetContext Browser("Browser")														'Tell the AI SDK which window 
 'The grey on blue text is not being recognized for the Username text consistently due to the lack of contrast.
 '	As such, you can use the icon next to the Username field to find the Username input field
 '===========================================================================================
+AIUtil("profile").Exist																		'Wait for the profile icon to display
 Set IconAnchor = AIUtil("profile")															'Set the IconAnchor to be the profile icon
 Set ValueAnchor = AIUtil("input", micAnyText, micWithAnchorOnLeft, IconAnchor)				'Set the Value field to be an "input" field, with any text, with the IconAnchor to its left
 ValueAnchor.Type DataTable.GlobalSheet.GetParameter("Username")								'Enter the User Name from the datasheet into the username field
@@ -69,6 +70,14 @@ Browser("Browser").Page("SuccessFactors: Admin").Link("Recruiting").WaitProperty
 Browser("Browser").Page("SuccessFactors: Admin").Link("Recruiting").Click					'The AI SDK OCR can't see the Recruiting text on the screen, occasionally
 AIUtil.FindTextBlock("Preferences").Exist 													'Sync to ensure the menu loads before proceeding.
 AIUtil.FindTextBlock("Candidates", micFromTop, 1).Click										'Click the Candidates tab item at the top of the screen
+'===========================================================================================
+'Sometimes the application will load slowly, causing the underlying hyperlink under the Candidates
+'	text to not be loaded into the presentation layer.  Check to see if the object on the next
+'	step is there, if not, click on the text again.
+'===========================================================================================
+If AIUtil.FindText("Add Candidate").Exist = False Then
+	AIUtil.FindTextBlock("Candidates", micFromTop, 1).Click										'Click the Candidates tab item at the top of the screen
+End If
 AIUtil.FindText("Add Candidate").Click														'Click the Add Candidate text
 '===========================================================================================
 'The application sometimes will shift the location of the Add Candidate text as it is loading,
