@@ -116,7 +116,6 @@ AIUtil.FindText("Marketing Emails").Click													'Click this line to shift 
 'We want to find the line that has "First Name" to find the text box to type in the first name
 '	This is another example of using VRI to find the correct object.
 '===========================================================================================
-AIUtil.SetContext Browser("Browser")														'Tell the AI SDK to work against the initial window again
 Set LineAnchor = AIUtil.FindText("First Name")												'Find the text "First Name" on the screen, set that as the line anchor
 Set ValueAnchor = AIUtil("text_box", micAnyText, micWithAnchorOnLeft, LineAnchor)			'Set the ValueAnchor to be the text box with the line anchor on the left
 ValueAnchor.Type FirstName																	'Enter the same first name for the candidate created earlier
