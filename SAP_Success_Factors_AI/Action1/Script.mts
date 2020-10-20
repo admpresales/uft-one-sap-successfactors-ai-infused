@@ -39,7 +39,7 @@ Function PropertiesDebug
 	
 End Function
 
-Dim FirstName, LastName, Email, CPActual, CPExpected
+Dim FirstName, LastName, Email, CPActual, CPExpected, rc
 
 Browser("Browser").Maximize																	'Maximize the browser window
 Browser("Browser").Navigate DataTable.GlobalSheet.GetParameter("URL")						'Navigate to the URL of SuccessFactors, driven off of the datasheet
@@ -48,7 +48,7 @@ AIUtil.SetContext Browser("Browser")														'Tell the AI SDK which window 
 'The grey on blue text is not being recognized for the Username text consistently due to the lack of contrast.
 '	As such, you can use the icon next to the Username field to find the Username input field
 '===========================================================================================
-AIUtil("profile").Exist																		'Wait for the profile icon to display
+rc = AIUtil("profile").Exist																		'Wait for the profile icon to display
 Set IconAnchor = AIUtil("profile")															'Set the IconAnchor to be the profile icon
 Set ValueAnchor = AIUtil("input", micAnyText, micWithAnchorOnLeft, IconAnchor)				'Set the Value field to be an "input" field, with any text, with the IconAnchor to its left
 ValueAnchor.Type DataTable.GlobalSheet.GetParameter("Username")								'Enter the User Name from the datasheet into the username field
@@ -56,19 +56,19 @@ AIUtil("text_box", "Enter Password").Type DataTable.GlobalSheet.GetParameter("Pa
 AIUtil.FindTextBlock("Log in").Click														'Click the Login button
 Browser("Browser").Sync																		'Wait for the browser DOM to be ready to proceed
 '===========================================================================================
-'You can just use AIUtil("down_triangle", micNoText, micFromLeft, 1).Click to click the down arrow,
+'You can just use AIUtil("down_triangle", micAnyText, micFromLeft, 1).Click to click the down arrow,
 '	but it is easier to understand/read if you anchor off of the text "Admin Center".  Please note that
 '	there are two text blocks with that text, so it's the first from the top
 '===========================================================================================
 Set TextAnchor = AIUtil.FindTextBlock("Admin Center", micFromTop, 1)
-Set IconAnchor = AIUtil("down_triangle", micNoText, micWithAnchorOnLeft, TextAnchor)
+Set IconAnchor = AIUtil("down_triangle", micAnyText, micWithAnchorOnLeft, TextAnchor)
 IconAnchor.Click
 '===========================================================================================
 'AI ADK OCR isn't recognizing the menu, submitted using feedback tool
 '===========================================================================================
 Browser("Browser").Page("SuccessFactors: Admin").Link("Recruiting").WaitProperty "visible",True, 3000	'Wait for the application to be ready to proceed
 Browser("Browser").Page("SuccessFactors: Admin").Link("Recruiting").Click					'The AI SDK OCR can't see the Recruiting text on the screen, occasionally
-AIUtil.FindTextBlock("Preferences").Exist 													'Sync to ensure the menu loads before proceeding.
+rc = AIUtil.FindTextBlock("Preferences").Exist 													'Sync to ensure the menu loads before proceeding.
 AIUtil.FindTextBlock("Candidates", micFromTop, 1).Click										'Click the Candidates tab item at the top of the screen
 '===========================================================================================
 'Sometimes the application will load slowly, causing the underlying hyperlink under the Candidates
@@ -108,7 +108,7 @@ AIUtil("combobox", "Salutation").Select "Mr."												'Select the Mr. salutat
 AIUtil.FindTextBlock("Save").Click															'Save changes in the candidate pop-up browser window
 AIUtil.FindTextBlock("Close Window").Click													'Close the pop-up browser window with the Close Window text link
 AIUtil.SetContext Browser("Browser")														'Tell the AI SDK to work against the initial window again
-AIUtil("close", micNoText, micFromRight, 1).Click											'Remove the other (default) search criteria line
+AIUtil("close", micAnyText, micFromRight, 1).Click											'Remove the other (default) search criteria line
 AIUtil.FindText("Basic Info").Click															'Click the Basic Info drop down to be able to search by the name
 AIUtil.FindTextBlock("First Name").Click													'Click the First Name in the drop down
 AIUtil.FindText("Marketing Emails").Click													'Click this line to shift focus, and erase the visual element of the box around the new line
@@ -125,6 +125,6 @@ DataTable.Value ("FullName") = FirstName & " " & LastName & " "								'Set the 
 Browser("Browser").Page("SuccessFactors: Candidates").Link("CandidateName").Check CheckPoint("CPCandidateFullName")	'Checkpoint to make sure that the candidate link showed up @@ script infofile_;_ZIP::ssf18.xml_;_
 Browser("Browser").Page("SuccessFactors: Candidates").SAPUIButton("Account Navigation for").Click	'There isn't anything for AI to recognize for the user drop down, it's a picture of the person, use traditional OR @@ script infofile_;_ZIP::ssf5.xml_;_
 AIUtil.FindText("Log out").Click															'Click the Log out text in the drop down menu
-AIUtil.FindTextBlock("Log in").Exist														'Wait for the Login text to make sure the window has finished loading
+rc = AIUtil.FindTextBlock("Log in").Exist														'Wait for the Login text to make sure the window has finished loading
 Browser("Browser").Close																	'Close the browser
 
