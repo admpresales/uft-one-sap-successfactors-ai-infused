@@ -50,7 +50,8 @@ AIUtil.SetContext Browser("Browser")														'Tell the AI SDK which window 
 '===========================================================================================
 rc = AIUtil("profile").Exist																		'Wait for the profile icon to display
 Set IconAnchor = AIUtil("profile")															'Set the IconAnchor to be the profile icon
-Set ValueAnchor = AIUtil("input", micAnyText, micWithAnchorOnLeft, IconAnchor)				'Set the Value field to be an "input" field, with any text, with the IconAnchor to its left
+Set ValueAnchor = AIUtil("input", micNoText, micWithAnchorOnLeft, IconAnchor)				'Set the Value field to be an "input" field, with any text, with the IconAnchor to its left
+'15.0.2 Set ValueAnchor = AIUtil("input", micAnyText, micWithAnchorOnLeft, IconAnchor)				'Set the Value field to be an "input" field, with any text, with the IconAnchor to its left
 ValueAnchor.Type DataTable.GlobalSheet.GetParameter("Username")								'Enter the User Name from the datasheet into the username field
 AIUtil("text_box", "Enter Password").Type DataTable.GlobalSheet.GetParameter("Password")	'Enter the password fromt he datasheet into the Password field
 AIUtil.FindTextBlock("Log in").Click														'Click the Login button
@@ -61,7 +62,8 @@ Browser("Browser").Sync																		'Wait for the browser DOM to be ready t
 '	there are two text blocks with that text, so it's the first from the top
 '===========================================================================================
 Set TextAnchor = AIUtil.FindTextBlock("Admin Center", micFromTop, 1)
-Set IconAnchor = AIUtil("down_triangle", micAnyText, micWithAnchorOnLeft, TextAnchor)
+Set IconAnchor = AIUtil("down_triangle", micNoText, micWithAnchorOnLeft, TextAnchor)
+'15.0.2 Set IconAnchor = AIUtil("down_triangle", micAnyText, micWithAnchorOnLeft, TextAnchor)
 IconAnchor.Click
 '===========================================================================================
 'AI ADK OCR isn't recognizing the menu, submitted using feedback tool
@@ -108,7 +110,8 @@ AIUtil("combobox", "Salutation").Select "Mr."												'Select the Mr. salutat
 AIUtil.FindTextBlock("Save").Click															'Save changes in the candidate pop-up browser window
 AIUtil.FindTextBlock("Close Window").Click													'Close the pop-up browser window with the Close Window text link
 AIUtil.SetContext Browser("Browser")														'Tell the AI SDK to work against the initial window again
-AIUtil("close", micAnyText, micFromRight, 1).Click											'Remove the other (default) search criteria line
+AIUtil("close", micNoText, micFromRight, 1).Click											'Remove the other (default) search criteria line
+'15.0.2 AIUtil("close", micAnyText, micFromRight, 1).Click											'Remove the other (default) search criteria line
 AIUtil.FindText("Basic Info").Click															'Click the Basic Info drop down to be able to search by the name
 AIUtil.FindTextBlock("First Name").Click													'Click the First Name in the drop down
 AIUtil.FindText("Marketing Emails").Click													'Click this line to shift focus, and erase the visual element of the box around the new line
@@ -117,7 +120,8 @@ AIUtil.FindText("Marketing Emails").Click													'Click this line to shift 
 '	This is another example of using VRI to find the correct object.
 '===========================================================================================
 Set LineAnchor = AIUtil.FindText("First Name")												'Find the text "First Name" on the screen, set that as the line anchor
-Set ValueAnchor = AIUtil("text_box", micAnyText, micWithAnchorOnLeft, LineAnchor)			'Set the ValueAnchor to be the text box with the line anchor on the left
+Set ValueAnchor = AIUtil("text_box", micNoText, micWithAnchorOnLeft, LineAnchor)			'Set the ValueAnchor to be the text box with the line anchor on the left
+'15.0.2 Set ValueAnchor = AIUtil("text_box", micAnyText, micWithAnchorOnLeft, LineAnchor)			'Set the ValueAnchor to be the text box with the line anchor on the left
 ValueAnchor.Type FirstName																	'Enter the same first name for the candidate created earlier
 AIUtil("button", "", micFromBottom, 1).Click												'Click the Search button
 AIUtil("button", "Accept").Click															'Click the Accept button on the pop-up frame to accept search results
