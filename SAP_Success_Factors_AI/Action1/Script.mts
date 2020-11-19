@@ -124,10 +124,19 @@ AIUtil.FindText("Marketing Emails").Click															'Click this line to shif
 'We want to find the line that has "First Name" to find the text box to type in the first name
 '	This is another example of using VRI to find the correct object.
 '===========================================================================================
-Set LineAnchor = AIUtil.FindText("First Name")													'Find the text "First Name" on the screen, set that as the line anchor
-Set ValueAnchor = AIUtil("text_box", micAnyText, micWithAnchorOnLeft, LineAnchor)			'Set the ValueAnchor to be the text box with the line anchor on the left
-ValueAnchor.Type FirstName																	'Enter the same first name for the candidate created earlier
-AIUtil("button", "", micFromBottom, 1).Click														'Click the Search button
+'Set LineAnchor = AIUtil.FindText("First Name")													'Find the text "First Name" on the screen, set that as the line anchor
+'Set ValueAnchor = AIUtil("text_box", micAnyText, micWithAnchorOnLeft, LineAnchor)			'Set the ValueAnchor to be the text box with the line anchor on the left
+'ValueAnchor.Type FirstName																	'Enter the same first name for the candidate created earlier
+AIUtil("text_box", "", micFromBottom, 1).Type FirstName										'Enter the same first name for the candidate created earlier
+
+'===========================================================================================
+'15.0.2 AI improvement, prior to 15.0.2, the AI OCR couldn't see the text on the "Search" button
+'===========================================================================================
+If AIUtil("button", "Search").Exist Then
+	AIUtil("button", "Search").Click																'Click the Search button
+Else
+	AIUtil("button", "", micFromBottom, 1).Click													'Click the Search button
+End If
 AIUtil("button", "Accept").Click																	'Click the Accept button on the pop-up frame to accept search results
 DataTable.Value ("FullName") = FirstName & " " & LastName & " "								'Set the value in the data table for the calculated full name of the candidate, used in the next step
 Browser("Browser").Page("SuccessFactors: Candidates").Link("CandidateName").Check CheckPoint("CPCandidateFullName")	'Checkpoint to make sure that the candidate link showed up @@ script infofile_;_ZIP::ssf18.xml_;_

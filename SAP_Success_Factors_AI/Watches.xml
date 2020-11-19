@@ -1,5 +1,5 @@
 ﻿<Properties>
   <WatchEntry0 value="AIUtil.FindText(&quot;First Name&quot;).Exist" />
-  <WatchEntry1 value="AIUtil(&quot;text_box&quot;, micAnyText, micWithAnchorOnLeft, AIUtil.FindText(&quot;is exactly&quot;)).Exist" />
+  <WatchEntry1 value="AIUtil(&quot;text_box&quot;, micAnyText, micWithAnchorOnLeft, AIUtil.FindText(&quot;First Name&quot;)).Exist" />
   <WatchEntry2 value="AIUtil.FindText(&quot;is exactly&quot;).Exist" />
 </Properties>
