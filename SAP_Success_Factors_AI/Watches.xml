@@ -1,8 +1,5 @@
 ﻿<Properties>
-  <WatchEntry0 value="AIUtil.FindTextBlock(&quot;and First Name&quot;).Exist" />
-  <WatchEntry1 value="Browser(&quot;Browser&quot;)" />
-  <WatchEntry2 value="Browser(&quot;Browser&quot;).GetROProperties" />
-  <WatchEntry3 value="AIUtil(&quot;combobox&quot;,micAnyText).Exist" />
-  <WatchEntry4 value="OperatorAnchor.Exist" />
-  <WatchEntry5 value="AIUtil.FindText(&quot;First Name&quot;).Exist" />
+  <WatchEntry0 value="AIUtil.FindText(&quot;First Name&quot;).Exist" />
+  <WatchEntry1 value="AIUtil(&quot;text_box&quot;, micAnyText, micWithAnchorOnLeft, AIUtil.FindText(&quot;is exactly&quot;)).Exist" />
+  <WatchEntry2 value="AIUtil.FindText(&quot;is exactly&quot;).Exist" />
 </Properties>
