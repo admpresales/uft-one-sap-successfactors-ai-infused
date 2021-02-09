@@ -39,7 +39,11 @@ Function PropertiesDebug
 	
 End Function
 
-Dim FirstName, LastName, Email, CPActual, CPExpected, rc
+Dim FirstName, LastName, Email, CPActual, CPExpected, rc, oShell
+
+Set oShell = CreateObject ("WSCript.shell")
+oShell.run "powershell -command ""Start-Service mediaserver"""
+Set oShell = Nothing
 
 '================================================================================================
 'This code will make it so that the script will be able to be run in both 15.0.1 and 15.0.2+ environment
